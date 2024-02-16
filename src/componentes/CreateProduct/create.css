@@ -1,0 +1,93 @@
+/* Contenedor principal */
+.viewport{
+    background-image: url("https://scontent.feze8-2.fna.fbcdn.net/v/t1.6435-9/123211846_10221242638929857_7517551681837845820_n.jpg?_nc_cat=100&ccb=1-7&_nc_sid=3ba11c&_nc_eui2=AeG2d8vPctyRrYzNCChLFGl3DpT9iNucG6EOlP2I25wbobMDy_GfHEJjrBGT7kmU2XpOHwGpNfpzzQDI_oW8iQGu&_nc_ohc=Yorio4RLeQ4AX-5fU81&_nc_ht=scontent.feze8-2.fna&oh=00_AfAH-C2biZtvLzXu3b5clqic9AxYpZlUg0DmNxr-jGPZ_g&oe=65F0F106");
+  }
+  .container {
+    margin-top: 50px;
+    margin-right: 40px;
+    max-width: 750px;
+    padding: 20px;
+    background-color: rgba(249, 249, 249, 0.7);
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  }
+  
+  h3 {
+    margin-bottom: 20px;
+    color: #333;
+    margin-left: 70px
+  }
+  
+  label {
+    font-weight: bold;
+  }
+  
+  input[type='text'],
+  input[type='number'],
+  input[type='file'] {
+    width: 40%;
+    padding: 10px;
+    margin-bottom: 10px;
+    border-radius: 5px;
+    box-sizing: border-box;
+    background-color: #fff;
+  }
+  
+  .radio-container {
+    display: flex;
+    justify-content: space-between; /* Ajusta el espacio entre los elementos */
+  }
+  
+  .radio-group {
+    display: flex;
+    align-items: center; /* Alinea los elementos verticalmente */
+  }
+  
+  .radio-group label {
+    margin-right: 10px; /* Espacio entre las etiquetas y los radio buttons */
+  }
+  
+  /* Opcional: Estilos para los radio buttons */
+  .radio-group input[type="radio"] {
+    margin-right: 5px; /* Espacio entre los radio buttons y las etiquetas */
+  }
+  
+  button[type='submit'] {
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  button[type='submit']:hover {
+    background-color: #0056b3;
+  }
+  
+  .error {
+    color: red;
+    font-size: 14px;
+  }
+  
+  .Select__control {
+    width: 40%;
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-sizing: border-box;
+    background-color: #fff;
+  }
+  
+  .Select__menu {
+    border-radius: 5px;
+    background-color: #fff;
+  }
+  
+  .Select__option--is-selected {
+    background-color: #007bff;
+    color: #fff;
+  }
+  
