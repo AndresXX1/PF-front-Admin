@@ -3,10 +3,11 @@ import { useHistory } from "react-router-dom";
 import { makeStyles, ThemeProvider } from "@mui/styles";
 import { Drawer, List, ListItem, ListItemText } from "@mui/material";
 import NewService from "../CreateProduct/createProduct";
-import StatsComponent from "../estadisticas/estadisticas";
+import SampleStatisticsChart from "../estadisticas/estadisticas";
 import ReviewsComponent from "../reviews/reviews";
 import ProductsComponent from "../products/products";
 import UsersComponent from "../Usuarios/usuarios";
+import ConfiguracionesDashboard from "../presentacion/presentacion"
 import { createTheme } from "@mui/material/styles";
 import styles from "./dashAdmin.module.css";
 import HomeIcon from "@mui/icons-material/Home";
@@ -18,10 +19,12 @@ const theme = createTheme();
 const useStyles = makeStyles(() => ({
   root: {
     display: "flex",
+    
   },
   sidebar: {
     width: 240,
     flexShrink: 0,
+    
   },
   drawerPaper: {
     width: 240,
@@ -32,10 +35,13 @@ const useStyles = makeStyles(() => ({
     alignItems: "center",
     height: 100,
     borderBottom: "1px solid #ddd",
+    
   },
   content: {
     flexGrow: 1,
     padding: theme.spacing(3),
+    
+   
   },
   button: {
     display: "flex",
@@ -58,7 +64,7 @@ const useStyles = makeStyles(() => ({
 
 const DashboardUsuario = () => {
   const classes = useStyles();
-  const [activeComponent, setActiveComponent] = useState(null);
+  const [activeComponent, setActiveComponent] = useState("ConfiguracionesDashboard"); // Cambiado aquí
   const history = useHistory();
 
   const logOut = () => {
@@ -67,7 +73,7 @@ const DashboardUsuario = () => {
   };
 
   const handleGoToHome = () => {
-    history.push("/");
+    history.push("/admin");
   };
 
   const renderComponent = (component) => {
@@ -85,14 +91,14 @@ const DashboardUsuario = () => {
           }}
         >
           <div className={classes.header}>
-            <div className={classes.button} onClick={handleGoToHome}>
-              <HomeIcon />
-              <ListItemText primary="Volver a Home" style={{ marginLeft: "10px" }} />
-            </div>
+
           </div>
-          <div className={classes.divider}></div>
           <List>
-            
+            <ListItem button onClick={() => renderComponent("ConfiguracionesDashboard")}> {/* Cambiado aquí */}
+              <SettingsIcon style={{marginLeft: "30px"}} />
+              <ListItemText primary="Configuraciones" style={{marginLeft: "20px"}} />
+            </ListItem>
+          <div className={classes.divider}></div>
             <ListItem button onClick={() => renderComponent("NewService")}>
               <ListItemText style={{marginLeft: "30px"}} primary="Nuevo Servicio" />
             </ListItem>
@@ -116,8 +122,9 @@ const DashboardUsuario = () => {
           </List>
         </Drawer>
         <main className={`${styles.content}`}>
+          {activeComponent === "ConfiguracionesDashboard" && <ConfiguracionesDashboard />} {/* Cambiado aquí */}
           {activeComponent === "NewService" && <NewService />}
-          {activeComponent === "StatsComponent" && <StatsComponent />}
+          {activeComponent === "StatsComponent" && <SampleStatisticsChart />}
           {activeComponent === "ReviewsComponent" && <ReviewsComponent />}
           {activeComponent === "ProductsComponent" && <ProductsComponent />}
           {activeComponent === "UsersComponent" && <UsersComponent />}

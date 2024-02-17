@@ -1,0 +1,24 @@
+.root {
+    display: flex;
+  }
+  
+  .sidebar {
+    width: 240px;
+    flex-shrink: 0;
+  }
+  
+  .drawerPaper {
+    width: 240px;
+ 
+  }
+  
+  .content {
+    flex-grow: 1;
+    padding: 24px;
+    background-image: url('https://adversa.ai/wp-content/uploads/2023/08/Frame-120.jpg'); 
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    margin-left: -150px;
+    margin-top: -30px;
+  }
