@@ -1,0 +1,93 @@
+.user-table-container {
+    min-width: 1000px;
+    max-width: 1500px;
+    max-height: auto;
+    margin-left: 50px ;
+    margin-top: 120px;
+    margin-right: 50px;
+    overflow: auto;
+  }
+
+  .user-table-container::-webkit-scrollbar {
+    width: 5px; 
+  }
+  
+  .user-table-container::-webkit-scrollbar-thumb {
+    background-color: rgba(0, 0, 0, 0.3); 
+    border-radius: 4px; 
+  }
+  
+  .user-table-container::-webkit-scrollbar-thumb:hover {
+    background-color: rgba(0, 0, 0, 0.5); 
+  }
+  
+  .table-wrapper {
+    max-height: 400px;
+    overflow-y: auto;
+    margin-top: 20px;
+  }
+  
+  table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+  
+  th, td {
+    border: 1px solid #0e0d0d;
+    padding: 12px;
+    text-align: left;
+  }
+  
+  th {
+    background-color: #333;
+    color: white;
+  }
+  
+  tr:nth-child(even) {
+    background-color: #f5f5f5;
+  }
+  
+  tr:hover {
+    background-color: #e0e0e0;
+  }
+  
+  .edit-delete {
+    background-color: #f3a3a3;
+  }
+  
+  .edit-delete-btn {
+    font-size: 12px;
+    padding: 7px 12px;
+    margin-right: 5px;
+    transition: background-color 0.3s;
+  }
+  
+  .edit-delete-btn:hover {
+    background-color: #f9b8b8;
+  }
+  
+  .delete-btn, .cancel-btn {
+    background-color: #ff4d4d;
+  }
+  
+  .delete-btn, .cancel-btn {
+    font-size: 12px;
+    padding: 7px 12px;
+    margin-right: 5px;
+    transition: background-color 0.3s;
+  }
+  
+  .delete-btn:hover, .cancel-btn:hover {
+    background-color: #ffffff;
+  }
+
+.titulo {
+    border: 1px solid gray;
+    position: absolute;
+    margin-top: -45px;
+    width: 250px;
+    text-align: center;
+    border-radius: 10px;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.7);
+    background-color: #ffffffdf;
+}

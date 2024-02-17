@@ -1,31 +1,45 @@
-import { useState, useContext } from "react";
+import * as React from "react" ;
 import { useForm } from "react-hook-form";
 import { Link, useHistory } from "react-router-dom";
 import axios from "axios";
 import { AuthContext } from "../AuthProvider/authProvider";
 import styles from "./login.module.css";
+import Button from '@mui/material/Button';
+import Snackbar from '@mui/material/Snackbar';
+import IconButton from '@mui/material/IconButton';
+import CloseIcon from '@mui/icons-material/Close';
 
 export default function Login() {
   const { register, handleSubmit, formState: { errors }, setError: setFormError, clearErrors } = useForm();
-  const [errorState, setErrorState] = useState(null);
+  const [errorState, setErrorState] = React.useState(null);
   const history = useHistory();
-  const { setAuth } = useContext(AuthContext); 
-  const [error, setError] = useState(null);
+  const { setAuth } = React.useContext(AuthContext); 
+  const [error, setError] = React.useState(null);
+  const [open, setOpen] = React.useState(false);
+  const [message, setMessage] = React.useState("");
 
   const onSubmit = async (data) => {
     try {
-      const response = await axios.post('http://localhost:3001/users/login', data);
-      if (response.data) {
+      const response = await axios.post('https://back-admin-hostel.onrender.com/users/login', data);
+      if (response.data.rol !== "admin") {
+        setMessage("user is not admin");
+
+        setOpen(true)
+      }
+      
+      if (response.data.rol === "admin") {
         const authData = {
-          token: response.data,
+          token: response.data.rol,
         };
         setAuth(authData);
-        localStorage.setItem('auth', JSON.stringify(authData)); 
-        history.push("/home");
+        history.push("/admin");
+
       } else {
         setErrorState('Error: The response is not valid');
       }
     } catch (error) {
+      setMessage("Disculpe los inconvenientes");
+      setOpen(true);
       setErrorState('Error al iniciar sesión: ' + error.message);
     }
   };
@@ -40,6 +54,35 @@ export default function Login() {
       });
     }
   };
+
+  const handleClick = () => {
+    setOpen(true);
+  };
+
+  const handleClose = (event, reason) => {
+    if (reason === 'clickaway') {
+      return;
+    }
+
+    setOpen(false);
+  };
+
+  const action = (
+    <React.Fragment>
+      <Button color="secondary" size="small" onClick={handleClose}>
+       
+      </Button>
+      <IconButton
+        size="small"
+        aria-label="close"
+        color="inherit"
+        onClick={handleClose}
+      >
+        <CloseIcon fontSize="small" />
+      </IconButton>
+    </React.Fragment>
+  );
+
 
   const handlePasswordChange = (e) => {
     clearErrors("password");
@@ -89,6 +132,13 @@ export default function Login() {
             Ingresar
           </button>
         </form>
+      <Snackbar
+        open={open}
+        autoHideDuration={1500}
+        onClose={handleClose}
+        message= {message}
+        action={action}
+      />
 
       </div>
     </div>
