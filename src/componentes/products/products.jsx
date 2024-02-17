@@ -10,7 +10,7 @@ function Productos() {
     // Llama a la API para obtener los productos cuando se monta el componente
     axios.get('https://jsonplaceholder.typicode.com/posts')//aca iria la api.
       .then(response => {
-        setProductos(response.data); // Ajusta según la estructura de datos que recibas
+        setProductos(response.data.map(producto => ({ ...producto, deleted: false }))); // Ajusta según la estructura de datos que recibas
       })
       .catch(error => {
         console.error('Error al obtener productos:', error);
@@ -18,7 +18,9 @@ function Productos() {
   }, []); // El array vacío asegura que el efecto se ejecute solo una vez al montar el componente
 
   const eliminarProducto = (id) => {
-    setProductos(productos.filter(producto => producto.id !== id));
+    setProductos(productos.map(producto =>
+      producto.id === id ? { ...producto, deleted: true } : producto
+    ));
   };
 
   return (
@@ -38,7 +40,7 @@ function Productos() {
           </tr>
         </thead>
         <tbody>
-          {productos.map(producto => (
+          {productos.filter(producto => !producto.deleted).map(producto => (
             <tr key={producto.id}>
               <td>{producto.name}</td>
               <td>{producto.location}</td>
