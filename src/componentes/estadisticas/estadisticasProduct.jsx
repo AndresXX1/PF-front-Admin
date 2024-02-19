@@ -1,56 +1,53 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import Chart from 'chart.js/auto';
-import './estadisticas.css';
-import { fetchReviewStatistics } from '../../redux/Action/action';
-import ProductStatisticsChart  from "./estadisticasProduct";
-import UserStatisticsChart from "./usuariosPorDia";
- 
-const SampleStatisticsChart = () => {
-  const dispatch = useDispatch();
-  const reviewStats = useSelector(state => state.reviewStatistics); // Obtén las estadísticas de revisión del estado
+import { getProductStatistics } from '../../redux/Action/action';
+import "./estadisticasP.css";
 
-  const reviewChartRef = useRef(null);
+const ProductStatisticsChart = () => {
+  const dispatch = useDispatch();
+  const productStats = useSelector(state => state.productStatistics);
+
+  const productChartRef = useRef(null);
   const [dataLoaded, setDataLoaded] = useState(false);
 
   useEffect(() => {
-    // Fetch de las estadísticas de revisión al montar el componente
-    dispatch(fetchReviewStatistics())
+    // Fetch de las estadísticas de producto al montar el componente
+    dispatch(getProductStatistics())
       .then(() => {
         setDataLoaded(true);
       })
       .catch(error => {
-        console.error('Error fetching review statistics:', error);
+        console.error('Error fetching product statistics:', error);
       });
   }, [dispatch]);
   
   useEffect(() => {
     // Limpiar al desmontar
     return () => {
-      if (reviewChartRef.current && reviewChartRef.current.chart) {
-        reviewChartRef.current.chart.destroy();
+      if (productChartRef.current && productChartRef.current.chart) {
+        productChartRef.current.chart.destroy();
       }
     };
   }, []);
 
   useEffect(() => {
-    // Renderiza el gráfico de revisión cuando los datos estén disponibles
-    if (dataLoaded && reviewStats && reviewStats.length > 0) {
-      const formattedHours = reviewStats.map(stat => {
-        const hour = parseInt(stat.hour);
-        return `${hour < 10 ? '0' : ''}${hour}:00`;
-      });
+    // Renderiza el gráfico de producto cuando los datos estén disponibles
+    if (dataLoaded && productStats && productStats.length > 0) {
+      const labels = productStats.map(stat => stat.hour);
+      const data = productStats.map(stat => parseInt(stat.productCount)); // Convertir la cadena a número
 
       renderChart(
-        reviewChartRef,
-        formattedHours, // Usar las horas formateadas como etiquetas del eje x
-        reviewStats.map(stat => stat.reviewCount), // Usar el recuento de revisiones como datos del eje y
-        'Review Statistics',
+        productChartRef,
+        labels, // Usar las horas como etiquetas del eje x
+        data, // Usar el recuento de productos como datos del eje y
+        'Product Statistics',
         'bar',
-        'rgba(54, 162, 235, 0.2)'
+        'rgba(54, 162, 235, 0.2)',
+        
       );
     }
-  }, [dataLoaded, reviewStats]);
+  }, [dataLoaded, productStats]);
 
   const renderChart = (chartRef, labels, data, label, chartType, color) => {
     if (!chartRef.current) return;
@@ -109,23 +106,17 @@ const SampleStatisticsChart = () => {
         }
     });
 };
+
+
+
   return (
-    
-    <div className="chart-container2">
-      <div className="chart2">
-        <h2>Review Statistics</h2>
-        <canvas ref={reviewChartRef}></canvas>
-      </div>
-      <div className='product'>
-
-      <ProductStatisticsChart/>
-      <div className='user'>
-
-      <UserStatisticsChart/>
-      </div>
+    <div className="chart-container3">
+      <div className="chart3">
+        <h2>Product Statistics</h2>
+        <canvas ref={productChartRef}></canvas>
       </div>
     </div>
   );
 }
 
-export default SampleStatisticsChart;
+export default ProductStatisticsChart;
