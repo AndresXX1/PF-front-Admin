@@ -3,9 +3,10 @@
     max-width: 1500px;
     max-height: auto;
     margin-left: 50px ;
-    margin-top: 120px;
+    margin-top: 200px;
     margin-right: 50px;
     overflow: auto;
+    margin-bottom: 200px;
   }
 
   .user-table-container::-webkit-scrollbar {
@@ -90,4 +91,5 @@
     border-radius: 10px;
     box-shadow: 0 0 5px rgba(0, 0, 0, 0.7);
     background-color: #ffffffdf;
+    color: #0e0d0d;
 }
