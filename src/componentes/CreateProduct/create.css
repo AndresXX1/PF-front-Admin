@@ -1,33 +1,36 @@
 
   .container {
-    margin-top: 120px;
+    margin-top: 40px;
     margin-right: 40px;
     width: 500px;
-    height: 800px;
+    height: auto;
     padding: 20px;
-    background-color: rgba(249, 249, 249, 0.845);
+    background-color: rgba(31, 29, 29, 0.845);
     border-radius: 8px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    margin-left: 650px;
+    margin-left: 750px;
+    margin-bottom: 100px;
     
   }
   
   h3 {
     margin-bottom: 50px;
-    color: #000000;
+    color: #fffefe;
     margin-left: 15px;
-    font-size: 40px;
-    margin-top: -120px;
-    border: 1px solid gray;
+    font-size: 25px;
+    
+    border: 1px solid salmon;
     text-align: center;
     border-radius: 10px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.7);
-    background-color: #faf4f48c;
+    
+    background-color: salmon;
     
   }
   
   label {
     font-weight: bold;
+    font-family: 'Arial', sans-serif;
+    color: #fff;
   }
   
   input[type='text'],
@@ -62,7 +65,7 @@
   }
   
   button[type='submit'] {
-    background-color: #007bff;
+    background-color: salmon;
     color: #fff;
     border: none;
     padding: 10px 20px;
@@ -72,7 +75,7 @@
   }
   
   button[type='submit']:hover {
-    background-color: #0056b3;
+    background-color: salmon;
   }
   
   .error {
@@ -96,7 +99,115 @@
   }
   
   .Select__option--is-selected {
-    background-color: #007bff;
+    background-color: salmon;
     color: #fff;
   }
   
+  .titulo-publicacion{
+    font-family: 'Arial', sans-serif;
+    margin-left: 280px;
+    margin-top: -150px;
+    margin-bottom: 30px;
+    
+  }
+
+  .price-nigth{
+    font-family: 'Arial', sans-serif;
+    margin-left: 280px;
+    width: 500px;
+    margin-top: -110px;
+    margin-bottom: 50px;
+  }
+
+  .estaciones{
+    font-family: 'Arial', sans-serif;
+    width: 200px;
+    margin-top: 50px;
+  }
+
+  .pool{
+    font-family: 'Arial', sans-serif;
+    margin-bottom: 20px;
+    margin-left: 280px;
+    margin-top: -80px;
+    margin-bottom: 50px;
+  }
+
+  .pool-label {
+    font-size: 18px;
+    color: #ffffff; /* Color del texto */
+  }
+  
+  .radio-container {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 10px;
+  }
+  
+  .radio-group {
+    display: flex;
+    align-items: center;
+  }
+  
+  .radio-option {
+    display: flex;
+    align-items: center;
+    margin-right: 20px;
+  }
+  
+  .radio-text {
+    margin-left: 5px;
+    font-size: 16px;
+    color: #ffffff; /* Color del texto */
+  }
+  
+  .radio-input {
+    margin-right: 5px;
+    appearance: none;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    border: 2px solid #ffffff; /* Color del borde */
+    outline: none;
+    cursor: pointer;
+  }
+
+  .radio-input:checked {
+    background-color: #ff0000; /* Color de fondo cuando está seleccionado */
+  }
+
+
+  .bedroom {
+    
+    width: 200px;
+    
+  }
+
+
+  .imagenes {
+    margin-top: 30px;
+    margin-left: 80px;
+    margin-top: 30px;
+    position: absolute;
+  }
+
+  .upload-button {
+    background-color: salmon; 
+    color: rgb(255, 241, 241);
+    padding: 12px 24px; 
+    border: none; 
+    border-radius: 8px;
+    cursor: pointer; 
+    transition: background-color 0.3s ease; 
+    font-size: 16px;
+    margin-left: 80px;
+
+  }
+  
+  .upload-button:hover {
+    background-color: #044cf4; 
+  }
+  
+  .upload-button:focus {
+    outline: none; 
+  }

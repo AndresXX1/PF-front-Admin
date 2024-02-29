@@ -1,18 +1,25 @@
-import React, { useState } from "react";
+import React, { useState, useEffect,useContext } from "react";
 import { useHistory } from "react-router-dom";
 import { makeStyles, ThemeProvider } from "@mui/styles";
-import { Drawer, List, ListItem, ListItemText } from "@mui/material";
+import { Drawer, List, ListItem, ListItemText, ListItemIcon } from "@mui/material";
 import NewService from "../CreateProduct/createProduct";
-import SampleStatisticsChart from "../estadisticas/estadisticas";
+import Dashboardeng from "../presentacion de estadisticas/estadistic";
 import ReviewsComponent from "../reviews/reviews";
 import ProductsComponent from "../products/products";
 import UsersComponent from "../Usuarios/usuarios";
-import ConfiguracionesDashboard from "../presentacion/presentacion"
+import ReservasTableComponent from "../reservas/tablaReservas";
 import { createTheme } from "@mui/material/styles";
 import styles from "./dashAdmin.module.css";
 import HomeIcon from "@mui/icons-material/Home";
 import ExitToAppIcon from "@mui/icons-material/ExitToApp";
-import SettingsIcon from "@mui/icons-material/Settings";
+import { Assessment } from '@mui/icons-material';
+import NewServiceIcon from '@mui/icons-material/AddBoxOutlined';
+import ReviewsIcon from '@mui/icons-material/RateReviewOutlined';
+import ProductsIcon from '@mui/icons-material/ShoppingCartOutlined';
+import UsersIcon from '@mui/icons-material/PeopleAltOutlined';
+import ReservasIcon from '@mui/icons-material/EventNoteOutlined';
+import {AuthContext} from "../AuthProvider/authProvider";
+import { dispatch } from "react";
 
 const theme = createTheme();
 
@@ -28,6 +35,7 @@ const useStyles = makeStyles(() => ({
   },
   drawerPaper: {
     width: 240,
+    
   },
   header: {
     display: "flex",
@@ -35,13 +43,11 @@ const useStyles = makeStyles(() => ({
     alignItems: "center",
     height: 100,
     borderBottom: "1px solid #ddd",
-    
   },
   content: {
     flexGrow: 1,
     padding: theme.spacing(3),
     
-   
   },
   button: {
     display: "flex",
@@ -58,26 +64,37 @@ const useStyles = makeStyles(() => ({
   divider1: {
     borderTop: "1px solid #ddd",
     marginBottom: "10px",
-    marginTop: "470px",
+    marginTop: "450px",
   },
 }));
 
 const DashboardUsuario = () => {
   const classes = useStyles();
-  const [activeComponent, setActiveComponent] = useState("ConfiguracionesDashboard"); // Cambiado aquí
+  const { auth, setAuth } = useContext(AuthContext);
+  const [activeComponent, setActiveComponent] = useState(() => {
+    const storedComponent = localStorage.getItem("activeComponent");
+    return storedComponent || "ConfiguracionesDashboard"; 
+  });
   const history = useHistory();
 
   const logOut = () => {
-    // Log out logic
+    if (window.gapi && window.gapi.auth2) {
+      var auth2 = window.gapi.auth2.getAuthInstance();
+      auth2.disconnect().then(function () {
+        console.log("User disconnected.");
+      });
+    }
+
+    setAuth(null);
+    localStorage.removeItem("auth");
     history.push("/");
   };
 
-  const handleGoToHome = () => {
-    history.push("/admin");
-  };
+
 
   const renderComponent = (component) => {
     setActiveComponent(component);
+    localStorage.setItem("activeComponent", component); 
   };
 
   return (
@@ -90,30 +107,50 @@ const DashboardUsuario = () => {
             paper: classes.drawerPaper,
           }}
         >
-          <div className={classes.header}>
-
-          </div>
+          <div className={classes.header}></div>
           <List>
-            <ListItem button onClick={() => renderComponent("ConfiguracionesDashboard")}> {/* Cambiado aquí */}
-              <SettingsIcon style={{marginLeft: "30px"}} />
-              <ListItemText primary="Configuraciones" style={{marginLeft: "20px"}} />
+            <ListItem
+              button
+              onClick={() => renderComponent("ConfiguracionesDashboard")}
+            >
+              <Assessment style={{ marginLeft: "30px" }} />
+              <ListItemText primary="Estadisticas" style={{ marginLeft: "20px" }} />
             </ListItem>
-          <div className={classes.divider}></div>
+            <div className={classes.divider}></div>
             <ListItem button onClick={() => renderComponent("NewService")}>
-              <ListItemText style={{marginLeft: "30px"}} primary="Nuevo Servicio" />
-            </ListItem>
-            <ListItem button onClick={() => renderComponent("StatsComponent")}>
-              <ListItemText style={{marginLeft: "30px"}} primary="Estadísticas" />
-            </ListItem>
-            <ListItem button onClick={() => renderComponent("ReviewsComponent")}>
-              <ListItemText style={{marginLeft: "30px"}} primary="Reseñas" />
-            </ListItem>
-            <ListItem button onClick={() => renderComponent("ProductsComponent")}>
-              <ListItemText style={{marginLeft: "30px"}} primary="Productos" />
-            </ListItem>
-            <ListItem button onClick={() => renderComponent("UsersComponent")}>
-              <ListItemText style={{marginLeft: "30px"}} primary="Usuarios" />
-            </ListItem>
+        <ListItemIcon>
+          <NewServiceIcon style={{ marginLeft: "20px" }}/>
+        </ListItemIcon>
+        <ListItemText primary="Nuevo Servicio" />
+      </ListItem>
+
+      <ListItem button onClick={() => renderComponent("ReviewsComponent")}>
+        <ListItemIcon>
+          <ReviewsIcon  style={{ marginLeft: "20px" }}/>
+        </ListItemIcon>
+        <ListItemText primary="Reseñas" />
+      </ListItem>
+
+      <ListItem button onClick={() => renderComponent("ProductsComponent")}>
+        <ListItemIcon>
+          <ProductsIcon style={{ marginLeft: "20px" }} />
+        </ListItemIcon>
+        <ListItemText primary="Productos" />
+      </ListItem>
+
+      <ListItem button onClick={() => renderComponent("UsersComponent")}>
+        <ListItemIcon>
+          <UsersIcon style={{ marginLeft: "20px" }} />
+        </ListItemIcon>
+        <ListItemText primary="Usuarios" />
+      </ListItem>
+
+      <ListItem button onClick={() => renderComponent("ReservasComponent")}>
+        <ListItemIcon>
+          <ReservasIcon  style={{ marginLeft: "20px" }}/>
+        </ListItemIcon>
+        <ListItemText primary="Reservas" />
+      </ListItem>
             <div className={classes.divider1}></div>
             <ListItem button onClick={logOut}>
               <ExitToAppIcon style={{ marginLeft: "30px", marginTop: "10px" }} />
@@ -122,12 +159,13 @@ const DashboardUsuario = () => {
           </List>
         </Drawer>
         <main className={`${styles.content}`}>
-          {activeComponent === "ConfiguracionesDashboard" && <ConfiguracionesDashboard />} {/* Cambiado aquí */}
+          {activeComponent === "ConfiguracionesDashboard" && <Dashboardeng />}
           {activeComponent === "NewService" && <NewService />}
-          {activeComponent === "StatsComponent" && <SampleStatisticsChart />}
+          {activeComponent === "StatsComponent" && <Dashboardeng />}
           {activeComponent === "ReviewsComponent" && <ReviewsComponent />}
           {activeComponent === "ProductsComponent" && <ProductsComponent />}
           {activeComponent === "UsersComponent" && <UsersComponent />}
+          {activeComponent === "ReservasComponent" && <ReservasTableComponent />}
         </main>
       </div>
     </ThemeProvider>

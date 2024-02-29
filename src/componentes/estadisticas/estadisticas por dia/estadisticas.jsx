@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import Chart from 'chart.js/auto';
 import './estadisticas.css';
-import { fetchReviewStatistics } from '../../redux/Action/action';
+import { fetchReviewStatistics } from '../../../redux/Action/action';
 import ProductStatisticsChart  from "./estadisticasProduct";
 import UserStatisticsChart from "./usuariosPorDia";
  
@@ -47,7 +47,7 @@ const SampleStatisticsChart = () => {
         reviewStats.map(stat => stat.reviewCount), // Usar el recuento de revisiones como datos del eje y
         'Review Statistics',
         'bar',
-        'rgba(54, 162, 235, 0.2)'
+        'rgba(255, 99, 132, 0.2)'
       );
     }
   }, [dataLoaded, reviewStats]);
@@ -57,72 +57,57 @@ const SampleStatisticsChart = () => {
     
     // Destruir el gráfico anterior si existe
     if (chartRef.current.chart) {
-        chartRef.current.chart.destroy();
+      chartRef.current.chart.destroy();
     }
     
     const ctx = chartRef.current.getContext('2d');
   
     chartRef.current.chart = new Chart(ctx, {
-        type: chartType,
-        data: {
+      type: chartType,
+      data: {
+        labels: labels,
+        datasets: [{
+          label: label, // Usar la etiqueta proporcionada
+          data: data,
+          backgroundColor: color,
+          borderColor: 'rgba(255, 99, 132, 1)',
+          borderWidth: 1
+        }]
+      },
+      options: {
+        scales: {
+          x: {
+            type: 'category',
             labels: labels,
-            datasets: [{
-                label: label,
-                data: data,
-                backgroundColor: color,
-                borderColor: 'rgba(255, 255, 255, 1)', // Cambiar el color del borde
-                borderWidth: 2, // Aumentar el ancho del borde
-                borderRadius: 20, // Agregar bordes redondeados a las barras
-                hoverBackgroundColor: 'rgba(255, 255, 255, 0.8)', // Cambiar el color de fondo al pasar el ratón
-                hoverBorderColor: 'rgba(255, 255, 255, 1)', // Cambiar el color del borde al pasar el ratón
-                hoverBorderWidth: 3 // Aumentar el ancho del borde al pasar el ratón
-            }]
-        },
-        options: {
-            plugins: {
-                legend: {
-                    labels: {
-                        color: 'rgba(255, 255, 255, 1)' // Cambiar el color del texto de la leyenda
-                    }
-                }
-            },
-            scales: {
-                x: {
-                    grid: {
-                        color: 'rgba(255, 255, 255, 0.1)' // Cambiar el color de las líneas de la cuadrícula en el eje x
-                    },
-                    ticks: {
-                        color: 'rgba(255, 255, 255, 0.8)' // Cambiar el color de las etiquetas del eje x
-                    }
-                },
-                y: {
-                    beginAtZero: true, // Comenzar el eje Y desde 0
-                    max: 10, // Establecer el máximo en 10 unidades
-                    grid: {
-                        color: 'rgba(255, 255, 255, 0.1)' // Cambiar el color de las líneas de la cuadrícula en el eje y
-                    },
-                    ticks: {
-                        color: 'rgba(255, 255, 255, 0.8)' // Cambiar el color de las etiquetas del eje y
-                    }
-                }
-            }
+            position: 'bottom',
+            reverse: false // De menor a mayor
+          },
+          y: {
+            beginAtZero: true,
+            stepSize: 1, // Tamaño del paso
+            suggestedMin: 1, // Mínimo sugerido
+            suggestedMax: 15 // Máximo sugerido
+          }
         }
+      }
     });
-};
+  };
   return (
     
-    <div className="chart-container2">
-      <div className="chart2">
+    <div className="chart-container2a">
+      <div className="chart2a">
         <h2>Review Statistics</h2>
         <canvas ref={reviewChartRef}></canvas>
+        <p>.</p>
+        <p style={{color: "white"}}>Estadisticas por hora</p>
       </div>
       <div className='product'>
 
       <ProductStatisticsChart/>
+      </div>
       <div className='user'>
 
       <UserStatisticsChart/>
-      </div>
       </div>
     </div>
   );

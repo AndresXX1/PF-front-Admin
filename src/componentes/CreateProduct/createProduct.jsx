@@ -1,5 +1,3 @@
-
-
 import * as React from 'react'
 import { useForm } from 'react-hook-form';
 import TextField from '@mui/material/TextField';
@@ -53,7 +51,7 @@ export default function NewService (){
         width: '40%',
         marginBottom: '10px',
         '& .MuiOutlinedInput-root': {
-          backgroundColor: '#fff',
+          backgroundColor: 'white',
         },
         '& .MuiOutlinedInput-input': {
           color: '#000',
@@ -190,45 +188,63 @@ export default function NewService (){
     return(
       <div className="viewport">
         <div className="container">
-        <h3>Formulario de alta de servicios de hospedaje:</h3>
+        <h3>Formulario de alta de servicios</h3>
         <form onSubmit={handleSubmit(onSubmit)}>
-            <label>Indique las estaciones del año idóneas para el alquiler de este servicio de hospedaje:</label>
-            <br></br>
-            <Select
-            isMulti
-            options={seasons}
-            {...register('season', { required: true })}
-            value={selectedSeasons}
-            onChange={handleSeasonChange}
-            placeholder="Selecciona las estaciones"
-            styles={{
-        option: (provided, state) => ({
-            ...provided,
-            color: 'black' 
-        }),
-        control: (provided, state) => ({
-            ...provided,
-            width: '40%' 
-        }),
-        menu: (provided, state) => ({
-            ...provided,
-            width: '40%' 
-        })
-    }}
-            />
-            <br></br>
-            {errors.season?.type === 'required' && <p className="error">**Campo requerido**</p>}
-            <br></br>
+            <div className="estaciones">
+            <label>Estaciones del año</label><br/><br/>
 
+            
+            <Select
+              isMulti
+              options={seasons}
+              {...register('season', { required: true })}
+              value={selectedSeasons}
+              onChange={handleSeasonChange}
+              placeholder="Selecciona las estaciones"
+              styles={{
+                option: (provided, state) => ({
+                  ...provided,
+                  color: 'black',
+                  backgroundColor: 'white', 
+                  border: '1px solid gray', 
+                }),
+                control: (provided, state) => ({
+                  ...provided,
+                  width: '100%',
+                  backgroundColor: 'white', 
+                  border: '1px solid gray', 
+                }),
+                menu: (provided, state) => ({
+                  ...provided,
+                  width: '100%',
+                  backgroundColor: 'white', 
+                  border: '1px solid gray', 
+                })
+              }}
+            />
+            
+                       <br/>
+            <br/>
+            {errors.season?.type === 'required' && <p className="error">**Campo requerido**</p>}
+            </div>
+            <br/>
+            <br/>
+            <div className="titulo-publicacion">
+              
             <label>Título de la publicación:</label>
-            <br></br>
-            <input type='text' {...register('name', { required: true, maxlength: 50 })}></input>
-            <br></br>
+            <br/>
+            <br/>
+           
+            
+            <input style={{ width: "200px", border: "1px 1px solid gray", backgroundColor: "white", height: "45px", marginTop: "-10px"}} type='text' {...register('name', { required: true, maxlength: 50 })}></input>
+            
             {errors.name?.type === 'required' && <p className="error">Ingrese un título para su publicación</p>}
             <br></br>
+            </div>
 
-            <label>Indique la localidad donde se ubica el servicio a publicar:</label>
+            <label>Localidad:</label>
             <br></br>
+            <br/>
             <Autocomplete
                 disablePortal
                 id="combo-box-demo"
@@ -242,53 +258,70 @@ export default function NewService (){
                 />
             <br></br> 
             
-            
-            <label>Indique el precio por noche para el hospedaje a publicar</label>
+            <div className="price-nigth">
+
+            <label>Precio por noche:</label>
             <br></br>
-            <input type='number' onKeyPress={handleKeyPressPr} {...register('pricePerNight', { required: true })}></input>
+            <br/>
+            <input style={{ border: "1px solid gray", backgroundColor: "white", height: "50px", marginTop: "-10px"}} type='number' onKeyPress={handleKeyPressPr} {...register('pricePerNight', { required: true })}></input>
             <br></br>
             {errors.pricePerNight?.type === 'required' && <p className="error">Ingrese un precio por noche para el hospedaje a publicar</p>}
 
+            </div>
 
-            <label>¿Qué cantidad de habitaciones alberga el hospedaje a publicar?</label>
+
+              <div className="bedroom">
+
+            <label >Cantidad de habitaciones</label>
             <br></br>
-            <input type='number' onKeyPress={handleKeyPressRooms}{...register('totalRooms', {required: true})}></input>
+            <br/>
+            <input style={{ width: "200px", border: "1px solid gray", backgroundColor: "white", height: "50px", marginTop: "-10px"}} type='number' onKeyPress={handleKeyPressRooms}{...register('totalRooms', {required: true})}></input>
             <br></br>
             {errors.totalRooms?.type === 'required' && <p className="error">Ingrese la cantidad de habitaciones con las que cuenta el hospedaje a publicar</p>}
+              </div>
             
 
-            <label>¿Posee piscina?</label>
-            
+            <div className="pool">
+            <label className="pool-label">¿Posee piscina?</label>
             <div className="radio-container">
-            <div className="radio-group">
-            <label>
-            <p style={{ color: "black" }}>Sí</p>
-            <input type="radio" className="radioYes" name="pool" value={true} {...register('pool',{ required: true })} />
-            </label>
-            <label>
-            <p style={{ color: "black" }}>No</p>
-            <input type="radio" className="radioNo" name="pool" value={false} {...register('pool',{ required: true })}/>
-            </label>
+              <div className="radio-group">
+                <label className="radio-option">
+                  <span className="radio-text">Sí</span>
+                  <input type="radio" className="radio-input" name="pool" value={true} {...register('pool', { required: true })} />
+                </label>
+                <label className="radio-option">
+                  <span className="radio-text">No</span>
+                  <input type="radio" className="radio-input" name="pool" value={false} {...register('pool', { required: true })} />
+                </label>
+              </div>
             </div>
-            </div>
-            <br></br>
-            {errors.pool?.type === 'required' && <p className="error">Indique si el hospedaje a publicar cuenta con pileta</p>}
-            
+            {errors.pool?.type === 'required' && <p className="error">Indique si el hospedaje a publicar cuenta con piscina</p>}
+          </div>
+
+
+            <div className="imagenes">
+
             <label>Agregue aquí imágenes sobre el hospedaje</label>   
             <br></br>
             <br></br>
-            <button style={{marginLeft: '80px'}} onClick={(event) => {
-            event.preventDefault()
-            widgetRef.current.open()}}>
+            
+
+            <button className="upload-button" onClick={(event) => {
+              event.preventDefault()
+              widgetRef.current.open()}}>
             Subir imágenes
             </button> 
+              
             <br></br>
             <br></br>
 
-            <p ref={paragraphRef} style={{marginLeft: '60px', color: 'black'}} >Imágenes subidas: {images?.length}</p>
+
+
+            <p ref={paragraphRef} style={{marginLeft: '100px', color: 'white',font: "Arial"}} >Imágenes subidas: {images?.length}</p>
             <br></br>
             <br></br>
-            <button style={{marginLeft: '300px'}} type='submit'>Publicar</button>
+            </div>
+            <button style={{marginTop: "200px", width: "500px"}} type='submit'>Publicar</button>
         </form>
         </div>
         <Snackbar
