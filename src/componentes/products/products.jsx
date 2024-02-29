@@ -36,7 +36,7 @@ const ProductsComponent = ({ products, getAllProducts, updateProductAdmin, delet
   };
 
   const handleSave = async (productId) => {
-    if (window.confirm('¿Estás seguro de que quieres guardar los cambios? esta accion es irreversible')) {
+    if (window.confirm('¿Estás seguro de que quieres guardar los cambios?')) {
        try {
          const productData = editableProductValues[productId];
          await updateProductAdmin(productId, productData);
@@ -49,7 +49,7 @@ const ProductsComponent = ({ products, getAllProducts, updateProductAdmin, delet
    };
    
    const handleDelete = async (productId) => {
-    if (window.confirm('¿Estás seguro de que quieres eliminar este producto? esta accion es irreversible ya que se borrara de la base de datos')) {
+    if (window.confirm('¿Estás seguro de que quieres eliminar este producto?')) {
        try {
          await deleteProduct(productId);
          getAllProducts();
@@ -155,20 +155,21 @@ const ProductsComponent = ({ products, getAllProducts, updateProductAdmin, delet
             </tr>
           </thead>
           <tbody>
-            {products && products.map(product => (
-              <tr key={product.id} style={{ backgroundColor: 'transparent' }}>
-                <td style={{ border: "transparent", padding: "15px", textAlign: "left", fontSize: "20px" }}>{product.id}</td>
-                <td style={{ border: "transparent", padding: "15px", textAlign: "left", fontSize: "20px" }}>
-                  {editableProduct === product.id ? (
-                    <input style={{ width: "150px"}}
-                      type="text"
-                      value={editableProductValues[product.id]?.name || ''}
-                      onChange={(e) => handleInputChange(product.id, 'name', e.target.value)}
-                    />
-                  ) : (
-                    product.name
-                  )}
-                </td>
+          {products && products.map(product => (
+ <tr key={product.id} style={{ backgroundColor: 'transparent' }}>
+    <td style={{ border: "transparent", padding: "15px", textAlign: "left", fontSize: "20px" }}>{product.id}</td>
+    <td style={{ border: "transparent", padding: "15px", textAlign: "left", fontSize: "20px" }}>
+      {editableProduct === product.id ? (
+        <input style={{ width: "150px"}}
+          type="text"
+          value={editableProductValues[product.id]?.name || ''}
+          onChange={(e) => handleInputChange(product.id, 'name', e.target.value)}
+          maxLength={15} // Agrega el atributo maxLength aquí
+        />
+      ) : (
+        product.name.length > 15 ? product.name.substring(0, 15) + '...' : product.name // Asegura que el nombre no exceda los 15 caracteres
+      )}
+    </td>
                 <td style={{ border: "transparent", padding: "15px", textAlign: "left", fontSize: "20px" }}>
                     {editableProduct === product.id ? (
                         <select
@@ -185,28 +186,42 @@ const ProductsComponent = ({ products, getAllProducts, updateProductAdmin, delet
                         product.location
                     )}
                     </td>
-                <td style={{ border: "transparent", padding: "15px", textAlign: "left", fontSize: "20px" }}>
-                  {editableProduct === product.id ? (
-                    <input style={{ width: "150px"}}
-                      type="text"
-                      value={editableProductValues[product.id]?.pricePerNight || ''}
-                      onChange={(e) => handleInputChange(product.id, 'pricePerNight', e.target.value)}
-                    />
-                  ) : (
-                    product.pricePerNight
-                  )}
-                </td>
-                <td style={{ border: "transparent", padding: "15px", textAlign: "left", fontSize: "20px" }}>
-                  {editableProduct === product.id ? (
-                    <input style={{ width: "150px"}}
-                      type="text"
-                      value={editableProductValues[product.id]?.season || ''}
-                      onChange={(e) => handleInputChange(product.id, 'season', e.target.value)}
-                    />
-                  ) : (
-                    product.season.join(', ')
-                  )}
-                </td>
+                    <td style={{ border: "transparent", padding: "15px", textAlign: "left", fontSize: "20px" }}>
+      {editableProduct === product.id ? (
+        <input style={{ width: "150px"}}
+          type="text"
+          value={editableProductValues[product.id]?.pricePerNight || ''}
+          onChange={(e) => {
+            const value = e.target.value;
+            const numericValue = parseInt(value, 10);
+            if (numericValue >= 1 && numericValue <= 100000) {
+              handleInputChange(product.id, 'pricePerNight', value);
+            } else if (value === '') {
+              // Permitir que el valor sea vacío para permitir la edición
+              handleInputChange(product.id, 'pricePerNight', value);
+            }
+          }}
+        />
+      ) : (
+        product.pricePerNight
+      )}
+    </td>
+    <td style={{ border: "transparent", padding: "15px", textAlign: "left", fontSize: "20px" }}>
+      {editableProduct === product.id ? (
+        <select style={{ width: "300px", height: "40px", marginTop: "-15px", borderRadius: "5px" }}
+          value={editableProductValues[product.id]?.season || ''}
+          onChange={(e) => handleInputChange(product.id, 'season', e.target.value)}
+        >
+          <option value="">Seleccione una temporada</option>
+          <option value="Verano">Verano</option>
+          <option value="Invierno">Invierno</option>
+          <option value="Otoño">Otoño</option>
+          <option value="Primavera">Primavera</option>
+        </select>
+      ) : (
+        product.season.join(', ')
+      )}
+    </td>
                 <td style={{ border: "transparent", padding: "15px", textAlign: "left", fontSize: "20px" }}>
                   {editableProduct === product.id ? (
                     <input style={{ width: "150px"}}
