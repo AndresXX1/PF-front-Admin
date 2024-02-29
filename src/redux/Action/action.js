@@ -73,15 +73,24 @@ import {
     DELETE_RESERVA_REQUEST,
     DELETE_RESERVA_SUCCESS,
     DELETE_RESERVA_FAILURE,
-    BAN_USER, UNBAN_USER
+    BAN_USER, UNBAN_USER,
+    FETCH_TOTAL_AMOUNT_FAILURE,
+    FETCH_TOTAL_AMOUNT_SUCCESS,
+    FETCH_TOTAL_AMOUNT_REQUEST,
+   FETCH_GANANCIAS_HOSTEL_PREMIUM_REQUEST,
+FETCH_GANANCIAS_HOSTEL_PREMIUM_SUCCESS ,
+FETCH_GANANCIAS_HOSTEL_PREMIUM_FAILURE ,
 
+FETCH_RESERVATION_STATISTICS_REQUEST,
+FETCH_RESERVATION_STATISTICS_SUCCESS,
+FETCH_RESERVATION_STATISTICS_FAILURE
 } from "../action-types/action-types";
 
 
 export const newHotel = (hotel) => {
     return (dispatch) => {
       dispatch({ type: NEW_HOTEL_REQUEST });
-      axios.post('https://back-admin-hostel.onrender.com/products/create', hotel)
+      axios.post('https://pf-back-hostel-admin.onrender.com/products/create', hotel)
         .then(response => {
           dispatch({
             type: NEW_HOTEL_SUCCESS,
@@ -120,7 +129,7 @@ const fetchUsersRequest = () => ({
       dispatch(fetchUsersRequest());
   
       try {
-        const response = await axios.get("http://localhost:3001/users/"); 
+        const response = await axios.get("https://pf-back-hostel-admin.onrender.com/users/"); 
   
         dispatch(fetchUsersSuccess(response.data));
       } catch (error) {
@@ -136,7 +145,7 @@ const fetchUsersRequest = () => ({
   export const deleteUser = (userId) => async (dispatch) => {
     try {
   
-      await axios.delete(`http://localhost:3001/users/delete/${userId}`);
+      await axios.delete(`https://pf-back-hostel-admin.onrender.com/users/delete/${userId}`);
   
       dispatch({
         type: DELETE_USER_SUCCESS,
@@ -172,7 +181,7 @@ const updateUserAdminRequest = () => ({
   
     try {
       const response = await axios.put(
-        `http://localhost:3001/users/eddituseradmin/${userId}`,
+        `https://pf-back-hostel-admin.onrender.com/users/eddituseradmin/${userId}`,
         userData
       );
   
@@ -192,7 +201,7 @@ const updateUserAdminRequest = () => ({
   
   export const fetchReviews = () => async (dispatch) => {
     try {
-      const response = await axios.get("http://localhost:3001/reviews"); // Update the URL to the correct endpoint
+      const response = await axios.get("https://pf-back-hostel-admin.onrender.com/reviews"); // Update the URL to the correct endpoint
       const data = response.data;
       console.log("TODAS LAS REVIEWS:", data);
       if (Array.isArray(data)) {
@@ -227,7 +236,7 @@ const updateUserAdminRequest = () => ({
       dispatch(deleteReviewRequest());
   
       await axios.delete(
-        `http://localhost:3001/reviews/delete/${productId}/${reviewId}`
+        `https://pf-back-hostel-admin.onrender.com/reviews/delete/${productId}/${reviewId}`
       );
   
       dispatch(deleteReviewSuccess());
@@ -242,7 +251,7 @@ const updateUserAdminRequest = () => ({
       try {
         dispatch({ type: GET_ALL_PRODUCTS_REQUEST }); 
         console.log("Fetching products...");
-        const response = await axios.get('http://localhost:3001/products/'); 
+        const response = await axios.get('https://pf-back-hostel-admin.onrender.com/products/'); 
         const products = response.data;
         console.log("Products received:", products);
         dispatch({ type: GET_ALL_PRODUCTS_SUCCESS, payload: products });
@@ -273,7 +282,7 @@ const updateUserAdminRequest = () => ({
   export const fetchReviewStatistics = () => async (dispatch) => {
     dispatch(fetchReviewStatisticsRequest());
     try {
-      const response = await axios.get("http://localhost:3001/reviews/statistics");
+      const response = await axios.get("https://pf-back-hostel-admin.onrender.com/reviews/statistics");
       const data = response.data.map(item => ({
         hour: item.hour,
         reviewCount: parseInt(item.reviewCount) // Convertir la cadena a número
@@ -305,7 +314,7 @@ const updateUserAdminRequest = () => ({
     dispatch(getProductStatisticsRequest());
     try {
       const response = await axios.get(
-        "http://localhost:3001/products/estadisticDay"
+        "https://pf-back-hostel-admin.onrender.com/products/estadisticDay"
       );
       const data = response.data.map((item) => ({
         hour: item.hour,
@@ -341,7 +350,7 @@ export const getUserStatistics = () => async (dispatch) => {
   dispatch(getUserStatisticsRequest());
   try {
     const response = await axios.get(
-      "http://localhost:3001/users/estadisticapordia"
+      "https://pf-back-hostel-admin.onrender.com/users/estadisticapordia"
     ); 
     const data = response.data.map((item) => ({
       hour: item.hour,
@@ -375,7 +384,7 @@ export const updateProductAdmin = (productId, productData) => async (dispatch) =
 
   try {
     const response = await axios.put(
-      `http://localhost:3001/products/edditProduct/${productId}`,
+      `https://pf-back-hostel-admin.onrender.com/products/edditProduct/${productId}`,
       productData
     );
 
@@ -406,7 +415,7 @@ export const deleteProductFailure = (error) => ({
 export const deleteProduct = (idKey) => async (dispatch) => {
   dispatch(deleteProductRequest());
   try {
-    const response = await axios.delete(`http://localhost:3001/products/delete/${idKey}`);
+    const response = await axios.delete(`https://pf-back-hostel-admin.onrender.com/products/delete/${idKey}`);
     dispatch(deleteProductSuccess());
     return response.data;
   } catch (error) {
@@ -423,7 +432,7 @@ export const fetchUserStats = () => {
   return async dispatch => {
       dispatch(fetchUserStatsRequest());
       try {
-          const response = await axios.get('http://localhost:3001/users/estadisticaporsemana');
+          const response = await axios.get('https://pf-back-hostel-admin.onrender.com/users/estadisticaporsemana');
           // Aquí puedes mapear los nombres de los días si es necesario
           dispatch(fetchUserStatsSuccess(response.data));
       } catch (error) {
@@ -458,7 +467,7 @@ export const fetchReviewStats = () => {
   return async dispatch => {
       dispatch(fetchReviewStatsRequest());
       try {
-          const response = await axios.get('http://localhost:3001/reviews/statisticsSemanal');
+          const response = await axios.get('https://pf-back-hostel-admin.onrender.com/reviews/statisticsSemanal');
           // Aquí puedes mapear los nombres de los días si es necesario
           dispatch(fetchReviewStatsSuccess(response.data));
       } catch (error) {
@@ -494,7 +503,7 @@ export const fetchProductStatsSemana = () => {
   return async dispatch => {
     dispatch(fetchProductStatsSemanaRequest());
     try {
-      const response = await axios.get('http://localhost:3001/products/estadisticsem');
+      const response = await axios.get('https://pf-back-hostel-admin.onrender.com/products/estadisticsem');
       dispatch(fetchProductStatsSemanaSuccess(response.data));
     } catch (error) {
       dispatch(fetchProductStatsSemanaFailure(error.message));
@@ -530,7 +539,7 @@ export const fetchProductStatsMonth = () => {
   return async dispatch => {
     dispatch(fetchProductStatsMonthRequest());
     try {
-      const response = await axios.get('http://localhost:3001/reviews/statisticsMensual'); 
+      const response = await axios.get('https://pf-back-hostel-admin.onrender.com/reviews/statisticsMensual'); 
       dispatch(fetchProductStatsMonthSuccess(response.data));
     } catch (error) {
       dispatch(fetchProductStatsMonthFailure(error.message));
@@ -566,7 +575,7 @@ export const fetchProductStatsMes = () => {
   return async dispatch => {
     dispatch(fetchProductStatsMesRequest());
     try {
-      const response = await axios.get('http://localhost:3001/products/estadisticMes');
+      const response = await axios.get('https://pf-back-hostel-admin.onrender.com/products/estadisticMes');
       dispatch(fetchProductStatsMesSuccess(response.data));
     } catch (error) {
       dispatch(fetchProductStatsMesFailure(error.message));
@@ -601,7 +610,7 @@ export const fetchUserStatsMonth = () => {
   return async (dispatch) => {
     dispatch(fetchUserStatsMonthRequest());
     try {
-      const response = await axios.get('http://localhost:3001/users/estadisticaporMes');
+      const response = await axios.get('https://pf-back-hostel-admin.onrender.com/users/estadisticaporMes');
       dispatch(fetchUserStatsMonthSuccess(response.data));
     } catch (error) {
       dispatch(fetchUserStatsMonthFailure(error.message));
@@ -636,7 +645,7 @@ export const fetchReviewStatsYear = () => {
   return async (dispatch) => {
     dispatch(fetchReviewStatsYearRequest());
     try {
-      const response = await axios.get('http://localhost:3001/reviews/statisticsAnual');
+      const response = await axios.get('https://pf-back-hostel-admin.onrender.com/reviews/statisticsAnual');
       dispatch(fetchReviewStatsYearSuccess(response.data));
     } catch (error) {
       dispatch(fetchReviewStatsYearFailure(error.message));
@@ -670,7 +679,7 @@ export const fetchProductStatsYear = () => {
   return async dispatch => {
     dispatch(fetchProductStatsYearRequest());
     try {
-      const response = await axios.get('http://localhost:3001/products/estadisticyear');
+      const response = await axios.get('https://pf-back-hostel-admin.onrender.com/products/estadisticyear');
       dispatch(fetchProductStatsYearSuccess(response.data));
     } catch (error) {
       dispatch(fetchProductStatsYearFailure(error.message));
@@ -705,7 +714,7 @@ export const fetchUserStatsYear = () => {
   return async dispatch => {
     dispatch(fetchUserStatsYearRequest());
     try {
-      const response = await axios.get('http://localhost:3001/users/estadisticaporAnual');
+      const response = await axios.get('https://pf-back-hostel-admin.onrender.com/users/estadisticaporAnual');
       dispatch(fetchUserStatsYearSuccess(response.data));
     } catch (error) {
       dispatch(fetchUserStatsYearFailure(error.message));
@@ -739,7 +748,7 @@ export const fetchHourlyReservationStats = () => {
   return async dispatch => {
     dispatch(fetchHourlyReservationStatsRequest());
     try {
-      const response = await axios.get('http://localhost:3001/recervas/estadistica'); 
+      const response = await axios.get('https://pf-back-hostel-admin.onrender.com/recervas/estadistica'); 
       dispatch(fetchHourlyReservationStatsSuccess(response.data));
     } catch (error) {
       dispatch(fetchHourlyReservationStatsFailure(error.message));
@@ -768,7 +777,7 @@ export const fetchRanking = () => {
   return async (dispatch) => {
     dispatch(fetchRankingRequest());
     try {
-      const response = await axios.get('http://localhost:3001/recervas/ranking');
+      const response = await axios.get('https://pf-back-hostel-admin.onrender.com/recervas/ranking');
       dispatch(fetchRankingSuccess(response.data.ranking));
     } catch (error) {
       dispatch(fetchRankingFailure(error.message));
@@ -817,7 +826,7 @@ export const fetchReservas = () => {
   return async (dispatch) => {
     dispatch(fetchReservasRequest());
     try {
-      const response = await axios.get('http://localhost:3001/recervas/todas'); // Ajusta la ruta según tu configuración
+      const response = await axios.get('https://pf-back-hostel-admin.onrender.com/recervas/todas'); // Ajusta la ruta según tu configuración
       dispatch(fetchReservasSuccess(response.data));
     } catch (error) {
       dispatch(fetchReservasFailure(error.message));
@@ -851,7 +860,7 @@ export const deleteReserva = (reservaId) => {
   return async (dispatch) => {
     dispatch(deleteReservaRequest());
     try {
-      await axios.delete(`http://localhost:3001/recervas/delete/${reservaId}`); 
+      await axios.delete(`https://pf-back-hostel-admin.onrender.com/recervas/delete/${reservaId}`); 
       dispatch(deleteReservaSuccess());
     } catch (error) {
       dispatch(deleteReservaFailure(error.message));
@@ -864,7 +873,7 @@ export const deleteReserva = (reservaId) => {
 export const banUser = (userId) => {
   return async (dispatch) => {
     try {
-      const response = await fetch(`http://localhost:3001/users/banner/${userId}`, {
+      const response = await fetch(`https://pf-back-hostel-admin.onrender.com/users/banner/${userId}`, {
         method: 'PUT',
       });
       if (!response.ok) {
@@ -881,7 +890,7 @@ export const banUser = (userId) => {
 export const unbanUser = (userId) => {
   return async (dispatch) => {
     try {
-      const response = await fetch(`http://localhost:3001/users/unbanner/${userId}`, {
+      const response = await fetch(`https://pf-back-hostel-admin.onrender.com/users/unbanner/${userId}`, {
         method: 'PUT',
       });
       if (!response.ok) {
@@ -893,3 +902,96 @@ export const unbanUser = (userId) => {
     }
   };
 };
+
+
+//todas las ganacias
+
+export const fetchTotalAmount = () => {
+  return async (dispatch) => {
+    dispatch(fetchTotalAmountRequest());
+    try {
+      const response = await axios.get('https://pf-back-hostel-admin.onrender.com/recervas/totalamount');
+      dispatch(fetchTotalAmountSuccess(response.data.totalAmount));
+    } catch (error) {
+      dispatch(fetchTotalAmountFailure(error.message));
+    }
+  };
+};
+
+export const fetchTotalAmountRequest = () => ({
+  type: FETCH_TOTAL_AMOUNT_REQUEST
+});
+
+export const fetchTotalAmountSuccess = (totalAmount) => ({
+  type: FETCH_TOTAL_AMOUNT_SUCCESS,
+  payload: totalAmount
+});
+
+export const fetchTotalAmountFailure = (error) => ({
+  type: FETCH_TOTAL_AMOUNT_FAILURE,
+  payload: error
+});
+
+
+export const fetchGananciasHostelPremium = () => {
+  return async (dispatch) => {
+     dispatch(fetchGananciasHostelPremiumRequest());
+     try {
+       // Realizar la solicitud para calcular las ganancias del Hostel Premium
+       const response = await axios.get('https://pf-back-hostel-admin.onrender.com/recervas/ganancias');
+ 
+       // Extraer las ganancias del Hostel Premium del resultado y convertir a número
+       const ganancias = parseFloat(response.data.gananciasHostelPremium.replace(/[^0-9.]/g, ''));
+ 
+       // Dispatch de la acción con las ganancias obtenidas
+       dispatch(fetchGananciasHostelPremiumSuccess(ganancias));
+     } catch (error) {
+       // Manejar cualquier error y dispatch de la acción de error
+       dispatch(fetchGananciasHostelPremiumFailure(error.message));
+     }
+  };
+ };
+
+
+export const fetchGananciasHostelPremiumRequest = () => ({
+  type: FETCH_GANANCIAS_HOSTEL_PREMIUM_REQUEST
+});
+
+
+export const fetchGananciasHostelPremiumSuccess = (ganancias) => ({
+  type: FETCH_GANANCIAS_HOSTEL_PREMIUM_SUCCESS,
+  payload: ganancias
+});
+
+
+export const fetchGananciasHostelPremiumFailure = (error) => ({
+  type: FETCH_GANANCIAS_HOSTEL_PREMIUM_FAILURE,
+  payload: error
+});
+
+
+export const fetchReservationStatistics = () => {
+  return async (dispatch) => {
+    dispatch(fetchReservationStatisticsRequest());
+    try {
+      const response = await axios.get('https://pf-back-hostel-admin.onrender.com/recervas/estadistica');
+      dispatch(fetchReservationStatisticsSuccess(response.data));
+    } catch (error) {
+      dispatch(fetchReservationStatisticsFailure(error.message));
+    }
+  };
+};
+
+export const fetchReservationStatisticsRequest = () => ({
+  type: FETCH_RESERVATION_STATISTICS_REQUEST
+});
+
+export const fetchReservationStatisticsSuccess = (statistics) => ({
+  type: FETCH_RESERVATION_STATISTICS_SUCCESS,
+  payload: statistics
+});
+
+export const fetchReservationStatisticsFailure = (error) => ({
+  type: FETCH_RESERVATION_STATISTICS_FAILURE,
+  payload: error
+});

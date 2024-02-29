@@ -69,7 +69,16 @@ import {
     DELETE_RESERVA_REQUEST,
     DELETE_RESERVA_SUCCESS,
     DELETE_RESERVA_FAILURE,
-    BAN_USER, UNBAN_USER
+    BAN_USER, UNBAN_USER,
+    FETCH_TOTAL_AMOUNT_FAILURE,
+FETCH_TOTAL_AMOUNT_SUCCESS,
+FETCH_TOTAL_AMOUNT_REQUEST,
+FETCH_GANANCIAS_HOSTEL_PREMIUM_REQUEST,
+FETCH_GANANCIAS_HOSTEL_PREMIUM_SUCCESS ,
+FETCH_GANANCIAS_HOSTEL_PREMIUM_FAILURE ,
+FETCH_RESERVATION_STATISTICS_REQUEST,
+FETCH_RESERVATION_STATISTICS_SUCCESS,
+FETCH_RESERVATION_STATISTICS_FAILURE
 
 } from "../action-types/action-types"
 
@@ -104,6 +113,16 @@ const initialState = {
   productStatsYear: [],
   userStatsYear: [],
   hourlyReservationStats: [],
+  gananciasHostelPremium:{
+    gananciasHostelPremium: [],
+    loading:false,
+    error: null,
+  },
+  totalAmount:{
+    totalAmount: [],
+    loading:false,
+    error: null
+  },
  ranking: {
   loading: false,
   error: null,
@@ -111,7 +130,7 @@ const initialState = {
  },
  reservas: [],
  success: false,
- 
+ statistics: [],
 };
 
   const Reducer = (state = initialState, action) => {
@@ -571,6 +590,81 @@ const initialState = {
                                                         user.id === action.payload ? { ...user, banned: false } : user
                                                       ),
                                                     };
+                                                    case FETCH_TOTAL_AMOUNT_REQUEST:
+                                                      return {
+                                                        ...state,
+                                                        totalAmount: {
+                                                          ...state.totalAmount,
+                                                          loading: true,
+                                                          error: null
+                                                        }
+                                                      };
+                                                    case FETCH_TOTAL_AMOUNT_SUCCESS:
+                                                      return {
+                                                        ...state,
+                                                        totalAmount: {
+                                                          ...state.totalAmount,
+                                                          totalAmount: action.payload,
+                                                          loading: false,
+                                                          error: null
+                                                        }
+                                                      };
+                                                    case FETCH_TOTAL_AMOUNT_FAILURE:
+                                                      return {
+                                                        ...state,
+                                                        totalAmount: {
+                                                          ...state.totalAmount,
+                                                          totalAmount: null,
+                                                          loading: false,
+                                                          error: action.payload
+                                                        }
+                                                      };
+
+                                                      case FETCH_GANANCIAS_HOSTEL_PREMIUM_REQUEST:
+                                                        return {
+                                                          ...state,
+                                                          gananciasHostelPremium:{
+                                                            ...state.gananciasHostelPremium,
+                                                            loading: true,
+                                                            error: null
+                                                          }
+                                                        };
+                                                        case FETCH_GANANCIAS_HOSTEL_PREMIUM_SUCCESS:
+                                                          return {
+                                                             ...state,
+                                                             gananciasHostelPremium: {
+                                                               ...state.gananciasHostelPremium,
+                                                               gananciasHostelPremium: action.payload, // Actualiza el valor numérico
+                                                               loading: false,
+                                                               error: null
+                                                             }
+                                                          };
+                                                      case FETCH_GANANCIAS_HOSTEL_PREMIUM_FAILURE:
+                                                        return {
+                                                          ...state,
+                                                          gananciasHostelPremium:{
+                                                              loading: false,
+                                                          error: action.payload
+                                                          }
+                                                        };
+                                                        case FETCH_RESERVATION_STATISTICS_REQUEST:
+      return {
+        ...state,
+        loading: true
+      };
+    case FETCH_RESERVATION_STATISTICS_SUCCESS:
+      return {
+        loading: false,
+        statistics: action.payload,
+        error: ''
+      };
+    case FETCH_RESERVATION_STATISTICS_FAILURE:
+      return {
+        loading: false,
+        statistics: [],
+        error: action.payload
+      }
+                                                        
                                                 default:
                                                     return state;
                                                 }
