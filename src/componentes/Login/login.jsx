@@ -31,7 +31,7 @@ export default function Login() {
 
   const onSubmit = async (data) => {
     try {
-      const response = await axios.post('http://localhost:3001/users/login', data);
+      const response = await axios.post('https://pf-back-hostel-admin.onrender.com/users/login', data);
       if (response.data.rol !== "admin") {
         setMessage("user is not admin");
         setOpen(true);
