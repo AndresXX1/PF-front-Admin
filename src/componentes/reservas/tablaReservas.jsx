@@ -32,43 +32,45 @@ const ReservasTableComponent = ({ reservas, fetchReservas, deleteReserva }) => {
       backgroundColor: "transparent",
       marginBottom: "50px"
     }}>
-      <div className="reservas">
-        <h2 className="titulo">Todas las Reservas</h2>
-        <table>
-          <thead>
-            <tr>
-              <th style={{ border: "transparent", backgroundColor: "salmon"}}>ID</th>
-              <th style={{ border: "transparent", backgroundColor: "salmon"}}>Producto ID</th>
-              <th style={{ border: "transparent", backgroundColor: "salmon"}}>User ID</th>
-              <th style={{ border: "transparent", backgroundColor: "salmon"}}>Fecha de Inicio</th>
-              <th style={{ border: "transparent", backgroundColor: "salmon"}}>Fecha de Fin</th>
-              <th style={{ border: "transparent", backgroundColor: "salmon"}}>Total de Habitaciones</th>
-              <th style={{ border: "transparent", backgroundColor: "salmon"}}>Total de Huéspedes</th>
-              <th style={{ border: "transparent", backgroundColor: "salmon"}}>Acciones</th>
+    <div className="reservas">
+      <h2 className="titulo">Todas las Reservas</h2>
+      <table>
+        <thead>
+          <tr>
+            <th style={{ border: "transparent", backgroundColor: "salmon"}}>ID</th>
+            <th style={{ border: "transparent", backgroundColor: "salmon"}}>Nombre del Producto</th>
+            <th style={{ border: "transparent", backgroundColor: "salmon"}}>Nombre del Usuario</th>
+            <th style={{ border: "transparent", backgroundColor: "salmon"}}>Total Amount</th>
+            <th style={{ border: "transparent", backgroundColor: "salmon"}}>Fecha de Inicio</th>
+            <th style={{ border: "transparent", backgroundColor: "salmon"}}>Fecha de Fin</th>
+            <th style={{ border: "transparent", backgroundColor: "salmon"}}>Total de Habitaciones</th>
+            <th style={{ border: "transparent", backgroundColor: "salmon"}}>Total de Huéspedes</th>
+            <th style={{ border: "transparent", backgroundColor: "salmon"}}>Acciones</th>
+          </tr>
+        </thead>
+        <tbody>
+          {reservas && reservas.map((reserva) => (
+            <tr key={reserva.id} style={{ backgroundColor: 'transparent' }} >
+              <td style={{ border: "transparent", padding: "15px", textAlign: "left", fontSize: "20px" }}>{reserva.id}</td>
+              <td style={{ border: "transparent", padding: "15px", textAlign: "left", fontSize: "20px" }}>{reserva.productName}</td>
+              <td style={{ border: "transparent", padding: "15px", textAlign: "left", fontSize: "20px" }}>{reserva.userName}</td>
+              <td style={{ border: "transparent", padding: "15px", textAlign: "left", fontSize: "20px" }}>{reserva.totalAmount}</td>
+              <td style={{ border: "transparent", padding: "15px", textAlign: "left", fontSize: "20px" }}>{reserva.startDate}</td>
+              <td style={{ border: "transparent", padding: "15px", textAlign: "left", fontSize: "20px" }}>{reserva.endDate}</td>
+              <td style={{ border: "transparent", padding: "15px", textAlign: "left", fontSize: "20px" }}>{reserva.totalRooms}</td>
+              <td style={{ border: "transparent", padding: "15px", textAlign: "left", fontSize: "20px" }}>{reserva.totalGuests}</td>
+              <td style={{ border: "transparent", padding: "15px", textAlign: "left", fontSize: "20px" }}>
+                <button className="delete" onClick={() => handleDelete(reserva.id)}>
+                 <DeleteIcon/>
+                </button>
+              </td>
             </tr>
-          </thead>
-          <tbody>
-            {reservas && reservas.map((reserva) => (
-              <tr key={reserva.id} style={{ backgroundColor: 'transparent' }} >
-                <td style={{ border: "transparent", padding: "15px", textAlign: "left", fontSize: "20px" }}>{reserva.id}</td>
-                <td style={{ border: "transparent", padding: "15px", textAlign: "left", fontSize: "20px" }}>{reserva.productId}</td>
-                <td style={{ border: "transparent", padding: "15px", textAlign: "left", fontSize: "20px" }}>{reserva.userId}</td>
-                <td style={{ border: "transparent", padding: "15px", textAlign: "left", fontSize: "20px" }}>{reserva.startDate}</td>
-                <td style={{ border: "transparent", padding: "15px", textAlign: "left", fontSize: "20px" }}>{reserva.endDate}</td>
-                <td style={{ border: "transparent", padding: "15px", textAlign: "left", fontSize: "20px" }}>{reserva.totalRooms}</td>
-                <td style={{ border: "transparent", padding: "15px", textAlign: "left", fontSize: "20px" }}>{reserva.totalGuests}</td>
-                <td style={{ border: "transparent", padding: "15px", textAlign: "left", fontSize: "20px" }}>
-                  <button className="delete" onClick={() => handleDelete(reserva.id)}>
-                  <DeleteIcon/>
-                  </button>
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      </div>
+          ))}
+        </tbody>
+      </table>
     </div>
-  );
+ </div>
+);
 };
 
 const mapStateToProps = (state) => ({

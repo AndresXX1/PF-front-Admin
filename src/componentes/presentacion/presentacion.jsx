@@ -3,6 +3,7 @@ import './presentacion.css';
 import { Alert } from '@mui/material';
 import WarningIcon from '@mui/icons-material/Warning';
 
+
 const ConfiguracionesDashboard = () => {
   return (
     <div className='contenedorssd'>
