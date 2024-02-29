@@ -4,7 +4,7 @@ import Chart from 'chart.js/auto';
 import { fetchReviewStats } from '../../../redux/Action/action';
 import UserStatisticsChart from "../estadisticas semanales/usuariosPorSemana";
 import ProductStatisticsWeek from "../estadisticas semanales/productSemanal"
-import "./reviewsSemanal.css";
+import "./reviewsSemanal.css"; //dsadasdasdasd
 
 const ReviewStatisticsChartSemanal = () => {
   const dispatch = useDispatch();
