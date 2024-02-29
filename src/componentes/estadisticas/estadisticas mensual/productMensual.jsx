@@ -1,52 +1,52 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import Chart from 'chart.js/auto';
-import { getUserStatistics } from '../../redux/Action/action';
-import "./usuarios.css";
+import { fetchProductStatsMes } from '../../../redux/Action/action'; 
+import "./productMensual.css";
 
-const UserStatisticsChart = () => {
+const ProductStatisticsMonth = () => {
   const dispatch = useDispatch();
-  const userStats = useSelector(state => state.data); // Corregido el acceso a los datos
+  const productStatsMes = useSelector(state => state.productStatsMes); 
 
-  const userChartRef = useRef(null);
+  const productChartRef = useRef(null);
   const [dataLoaded, setDataLoaded] = useState(false);
 
   useEffect(() => {
-    // Fetch de las estadísticas de usuarios al montar el componente
-    dispatch(getUserStatistics())
+    
+    dispatch(fetchProductStatsMes())
       .then(() => {
         setDataLoaded(true);
       })
       .catch(error => {
-        console.error('Error fetching user statistics:', error);
+        console.error('Error fetching product statistics:', error);
       });
   }, [dispatch]);
-  
+
   useEffect(() => {
     // Limpiar al desmontar
     return () => {
-      if (userChartRef.current && userChartRef.current.chart) {
-        userChartRef.current.chart.destroy();
+      if (productChartRef.current && productChartRef.current.chart) {
+        productChartRef.current.chart.destroy();
       }
     };
   }, []);
 
   useEffect(() => {
-    // Renderiza el gráfico de usuarios cuando los datos estén disponibles
-    if (dataLoaded && userStats && userStats.length > 0) {
-      const labels = userStats.map(stat => stat.hour);
-      const data = userStats.map(stat => parseInt(stat.userCount)); // Convertir la cadena a número
+    
+    if (dataLoaded && productStatsMes && productStatsMes.length > 0) {
+      const labels = productStatsMes.map(stat => stat.Week); 
+      const data = productStatsMes.map(stat => parseInt(stat.productCount));
 
       renderChart(
-        userChartRef,
-        labels, // Usar las horas como etiquetas
-        data, // Usar el recuento de usuarios como datos
-        'User Statistics', // Añadido el título
-        'line', // Tipo de gráfico
-        'rgba(54, 162, 235, 0.2)' // Color de fondo
+        productChartRef,
+        labels, 
+        data, 
+        'Product Statistics', 
+        'bar',
+        'rgba(54, 162, 235, 0.2)'
       );
     }
-  }, [dataLoaded, userStats]);
+  }, [dataLoaded, productStatsMes]);
 
   const renderChart = (chartRef, labels, data, label, chartType, color) => {
     if (!chartRef.current) return;
@@ -90,13 +90,20 @@ const UserStatisticsChart = () => {
   };
 
   return (
-    <div className="chart-container1">
-      <div className="chart1">
-        <h2>User Statistics</h2>
-        <canvas ref={userChartRef}></canvas>
+    <div className="cajassd">
+      <div className="cajite">
+        <h2>Product Statistics</h2>
+        <canvas ref={productChartRef}></canvas>
+        {dataLoaded && productStatsMes && productStatsMes.length > 0 && (
+          <div className='fechas'>
+
+            <p>.</p>
+            <p>Month Date: {productStatsMes[0].monthDate}</p>
+          </div>
+        )}
       </div>
     </div>
   );
 }
 
-export default UserStatisticsChart;
+export default ProductStatisticsMonth;

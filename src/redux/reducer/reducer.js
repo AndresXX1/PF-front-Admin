@@ -30,6 +30,47 @@ import {
     DELETE_PRODUCT_REQUEST,
     DELETE_PRODUCT_SUCCESS,
     DELETE_PRODUCT_FAILURE,
+    FETCH_USER_STATS_REQUEST,
+    FETCH_USER_STATS_SUCCESS,
+    FETCH_USER_STATS_FAILURE,
+    FETCH_REVIEW_STATS_REQUEST,
+    FETCH_REVIEW_STATS_SUCCESS,
+    FETCH_REVIEW_STATS_FAILURE,
+    FETCH_PRODUCT_STATS_SEMANA_REQUEST,
+    FETCH_PRODUCT_STATS_SEMANA_SUCCESS,
+    FETCH_PRODUCT_STATS_SEMANA_FAILURE,
+    FETCH_PRODUCT_STATS_MONTH_FAILURE,
+    FETCH_PRODUCT_STATS_MONTH_REQUEST,
+    FETCH_PRODUCT_STATS_MONTH_SUCCESS,
+    FETCH_PRODUCT_STATS_MES_FAILURE,
+    FETCH_PRODUCT_STATS_MES_SUCCESS,
+    FETCH_PRODUCT_STATS_MES_REQUEST,
+    FETCH_USER_STATS_MONTH_REQUEST,
+    FETCH_USER_STATS_MONTH_SUCCESS,
+    FETCH_USER_STATS_MONTH_FAILURE,
+    FETCH_REVIEW_STATS_YEAR_REQUEST,
+    FETCH_REVIEW_STATS_YEAR_SUCCESS,
+    FETCH_REVIEW_STATS_YEAR_FAILURE,
+    FETCH_PRODUCT_STATS_YEAR_REQUEST,
+    FETCH_PRODUCT_STATS_YEAR_SUCCESS,
+    FETCH_PRODUCT_STATS_YEAR_FAILURE,
+    FETCH_USER_STATS_YEAR_REQUEST,
+    FETCH_USER_STATS_YEAR_SUCCESS,
+    FETCH_USER_STATS_YEAR_FAILURE,
+    FETCH_HOURLY_RESERVATION_STATS_REQUEST,
+    FETCH_HOURLY_RESERVATION_STATS_SUCCESS,
+    FETCH_HOURLY_RESERVATION_STATS_FAILURE,
+    FETCH_RANKING_REQUEST,
+    FETCH_RANKING_SUCCESS,
+    FETCH_RANKING_FAILURE,
+    FETCH_RESERVAS_REQUEST,
+    FETCH_RESERVAS_SUCCESS,
+    FETCH_RESERVAS_FAILURE,
+    DELETE_RESERVA_REQUEST,
+    DELETE_RESERVA_SUCCESS,
+    DELETE_RESERVA_FAILURE,
+    BAN_USER, UNBAN_USER
+
 } from "../action-types/action-types"
 
 
@@ -37,7 +78,7 @@ const initialState = {
   userDataSession: null,
   users: [],
   loading: false,
-  error: null,
+  error: null,  
   product: {
     detail: null,
     createdProduct: null,
@@ -52,9 +93,26 @@ const initialState = {
   reviewStatistics: [],
   productStatistics: [],
   data: [], 
-  products: []
+  products: [],
+  stats: [],
+  stats1: [],
+  productStats: [],
+  productStatsMonth: [],
+  productStatsMes: [],
+  userStatsMonth: [],
+  reviewStatsYear: [],
+  productStatsYear: [],
+  userStatsYear: [],
+  hourlyReservationStats: [],
+ ranking: {
+  loading: false,
+  error: null,
+  ranking:[],
+ },
+ reservas: [],
+ success: false,
+ 
 };
-
 
   const Reducer = (state = initialState, action) => {
     switch (action.type) {
@@ -250,10 +308,272 @@ const initialState = {
                                   loading: false,
                                   error: action.payload,
                                 };
+                                case FETCH_USER_STATS_REQUEST:
+                                  return {
+                                      ...state,
+                                      loading: true
+                                  };
+                              case FETCH_USER_STATS_SUCCESS:
+                                  return {
+                                      loading: false,
+                                      stats: action.payload,
+                                      error: ''
+                                  };
+                              case FETCH_USER_STATS_FAILURE:
+                                  return {
+                                      loading: false,
+                                      stats: [],
+                                      error: action.payload
+                                  };
+                                  case FETCH_REVIEW_STATS_REQUEST:
+                              return {
+                                ...state,
+                                loading: true,
+                                error: null,
+                              };
+                            case FETCH_REVIEW_STATS_SUCCESS:
+                              return {
+                                ...state,
+                                loading: false,
+                                stats1: action.payload,
+                                error: null,
+                              };
+                            case FETCH_REVIEW_STATS_FAILURE:
+                              return {
+                                ...state,
+                                loading: false,
+                                stats1: [],
+                                error: action.payload,
+                              };
+                              case FETCH_PRODUCT_STATS_SEMANA_REQUEST:
+                                return {
+                                  ...state,
+                                  loading: true,
+                                  error: null
+                                };
+                              case FETCH_PRODUCT_STATS_SEMANA_SUCCESS:
+                                return {
+                                  ...state,
+                                  loading: false,
+                                  productStats: action.payload,
+                                  error: null
+                                };
+                              case FETCH_PRODUCT_STATS_SEMANA_FAILURE:
+                                return {
+                                  ...state,
+                                  loading: false,
+                                  error: action.payload
+                                };
+                                case FETCH_PRODUCT_STATS_MONTH_REQUEST:
+                                  return {
+                                    ...state,
+                                    loading: true,
+                                    error: null
+                                  };
+                                case FETCH_PRODUCT_STATS_MONTH_SUCCESS:
+                                  return {
+                                    ...state,
+                                    loading: false,
+                                    productStatsMonth: action.payload,
+                                    error: null
+                                  };
+                                case FETCH_PRODUCT_STATS_MONTH_FAILURE:
+                                  return {
+                                    ...state,
+                                    loading: false,
+                                    error: action.payload
+                                  };
+                                  case FETCH_PRODUCT_STATS_MES_REQUEST:
+                                    return {
+                                      ...state,
+                                      loading: true,
+                                      error: null
+                                    };
+                                  case FETCH_PRODUCT_STATS_MES_SUCCESS:
+                                    return {
+                                      ...state,
+                                      loading: false,
+                                      productStatsMes: action.payload,
+                                      error: null
+                                    };
+                                  case FETCH_PRODUCT_STATS_MES_FAILURE:
+                                    return {
+                                      ...state,
+                                      loading: false,
+                                      error: action.payload
+                                    };
+                                    case FETCH_USER_STATS_MONTH_REQUEST:
+                                      return {
+                                        ...state,
+                                        loading: true,
+                                        error: null
+                                      };
+                                    case FETCH_USER_STATS_MONTH_SUCCESS:
+                                      return {
+                                        ...state,
+                                        userStatsMonth: action.payload,
+                                        loading: false,
+                                        error: null
+                                      };
+                                    case FETCH_USER_STATS_MONTH_FAILURE:
+                                      return {
+                                        ...state,
+                                        loading: false,
+                                        error: action.payload
+                                      };
+                                      case FETCH_REVIEW_STATS_YEAR_REQUEST:
+                                        return {
+                                          ...state,
+                                          loading: true
+                                        };
+                                      case FETCH_REVIEW_STATS_YEAR_SUCCESS:
+                                        return {
+                                          ...state,
+                                          loading: false,
+                                          reviewStatsYear: action.payload,
+                                          error: ''
+                                        };
+                                      case FETCH_REVIEW_STATS_YEAR_FAILURE:
+                                        return {
+                                          ...state,
+                                          loading: false,
+                                          reviewStatsYear: [],
+                                          error: action.payload
+                                        };
 
-        default:
-            return state;
-        }
-    }
-  
-  export default Reducer;
+                                        case FETCH_PRODUCT_STATS_YEAR_REQUEST:
+                                          return {
+                                            ...state,
+                                            loading: true
+                                          };
+                                        case FETCH_PRODUCT_STATS_YEAR_SUCCESS:
+                                          return {
+                                            loading: false,
+                                            productStatsYear: action.payload,
+                                            error: ''
+                                          };
+                                        case FETCH_PRODUCT_STATS_YEAR_FAILURE:
+                                          return {
+                                            loading: false,
+                                            productStatsYear: [],
+                                            error: action.payload
+                                          };
+                                          case FETCH_USER_STATS_YEAR_REQUEST:
+                                            return {
+                                              ...state,
+                                              loading: true
+                                            };
+                                          case FETCH_USER_STATS_YEAR_SUCCESS:
+                                            return {
+                                              loading: false,
+                                              userStatsYear: action.payload,
+                                              error: ''
+                                            };
+                                          case FETCH_USER_STATS_YEAR_FAILURE:
+                                            return {
+                                              loading: false,
+                                              userStatsYear: [],
+                                              error: action.payload
+                                            };
+
+                                            case FETCH_HOURLY_RESERVATION_STATS_REQUEST:
+                                              return {
+                                                ...state,
+                                                loading: true,
+                                                error: null
+                                              };
+                                            case FETCH_HOURLY_RESERVATION_STATS_SUCCESS:
+                                              return {
+                                                ...state,
+                                                hourlyReservationStats: action.payload,
+                                                loading: false,
+                                                error: null
+                                              };
+                                            case FETCH_HOURLY_RESERVATION_STATS_FAILURE:
+                                              return {
+                                                ...state,
+                                                loading: false,
+                                                error: action.payload
+                                              };
+                                              case FETCH_RANKING_REQUEST:
+                                                return {
+                                                  ...state,
+                                                  ranking:{
+                                                  loading: true,
+                                                  error: null
+                                                  }
+                                                };
+                                                case FETCH_RANKING_SUCCESS:
+                                                  return {
+                                                    ...state,
+                                                    ranking:{
+                                                    loading: false,
+                                                    ranking: action.payload, 
+                                                    error: null,
+                                                    }
+                                                  };
+                                              case FETCH_RANKING_FAILURE:
+                                                return {
+                                                  ...state,
+                                                  ranking:{
+                                                  loading: false,
+                                                  ranking: [],
+                                                  error: action.payload
+                                                  }
+                                                };
+
+                                                case FETCH_RESERVAS_REQUEST:
+                                                return {
+                                                  ...state,
+                                                  loading: true
+                                                };
+                                              case FETCH_RESERVAS_SUCCESS:
+                                                return {
+                                                  loading: false,
+                                                  reservas: action.payload,
+                                                  error: ''
+                                                };
+                                              case FETCH_RESERVAS_FAILURE:
+                                                return {
+                                                  loading: false,
+                                                  reservas: [],
+                                                  error: action.payload
+                                                };
+                                                case DELETE_RESERVA_REQUEST:
+                                                  return {
+                                                    ...state,
+                                                    loading: true
+                                                  };
+                                                case DELETE_RESERVA_SUCCESS:
+                                                  return {
+                                                    loading: false,
+                                                    success: true,
+                                                    error: ''
+                                                  };
+                                                case DELETE_RESERVA_FAILURE:
+                                                  return {
+                                                    loading: false,
+                                                    success: false,
+                                                    error: action.payload
+                                                  };
+
+                                                  case BAN_USER:
+                                                    return {
+                                                      ...state,
+                                                      users: state.users.map(user =>
+                                                        user.id === action.payload ? { ...user, banned: true } : user
+                                                      ),
+                                                    };
+                                                  case UNBAN_USER:
+                                                    return {
+                                                      ...state,
+                                                      users: state.users.map(user =>
+                                                        user.id === action.payload ? { ...user, banned: false } : user
+                                                      ),
+                                                    };
+                                                default:
+                                                    return state;
+                                                }
+                                            }
+                                          
+                                          export default Reducer;

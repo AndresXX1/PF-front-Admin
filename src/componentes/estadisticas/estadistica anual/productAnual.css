@@ -1,0 +1,59 @@
+.chart-container3D {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+  margin-top: 65px;
+    }
+    
+    .chart3D {
+      width: 80%;
+      max-width: 600px;
+      background-color: #1f1f1f;
+      border-radius: 10px;
+      box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
+      padding: 20px;
+    }
+    
+    h2 {
+      color: #fff;
+      font-size: 24px;
+      text-align: center;
+      margin-bottom: 20px;
+    }
+    
+    canvas {
+      width: 100%;
+      height: auto;
+      border-radius: 10px;
+    }
+    
+    /* Personalización de la leyenda */
+    .chartjs-custom-legend {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+    }
+    
+    .chartjs-custom-legend-item {
+      display: flex;
+      align-items: center;
+      margin-bottom: 5px;
+    }
+    
+    .chartjs-custom-legend-color {
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      margin-right: 5px;
+    }
+    
+    .chartjs-custom-legend-label {
+      color: #fff;
+      font-size: 14px;
+    }
+  
