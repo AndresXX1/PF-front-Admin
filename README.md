@@ -20,7 +20,7 @@
 3. ⬇️ Clona el repositorio
 
     ```bash
-    $ git clone https://github.com/ryo-ma/gpt-assistants-api-ui.git
+    $ git clone https://github.com/ryo-ma/gpt-assistants-api-ui.git](https://github.com/AndresXX1/PF-front-Admin/
     ```
 
 4. 📦 Instala dependencias
