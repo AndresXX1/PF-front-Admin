@@ -5,7 +5,7 @@
 * 📁 Soporta la subida y bajada de datos
 * 🪟 Realizada con Node.js, React, Redux, axios, y estilada con css puro y material UI
 
-<!-- <img width="1459" alt="スクリーンショット 2023-11-20 2 23 51" src="https://github.com/ryo-ma/gpt-assistants-api-ui/assets/6661165/5c288d51-196a-4919-bc4d-dc508146f58a"> -->
+ <img width="1459" alt="スクリーンショット 2023-11-20 2 23 51" src="https://github.com/AndresXX1/PF-front-Admin/blob/main/public/Captura%20de%20pantalla%202024-03-04%20205427.png"> 
 
 ## 🌟 Quick Start
 
